@@ -15,12 +15,23 @@ export class DawnOfferService {
         return dawn;
     }
 
+    async get(): Promise<DawnOfferDTO[]> {
+        const dawn = await this.dawnOfferModel
+            .find(
+                {
+                    start: { $lte: Date.now() },
+                    end: { $gte: Date.now() },
+                },
+            );
+        return dawn;
+    }
+
     async getByType(type: string): Promise<DawnOfferDTO[]> {
         const dawn = await this.dawnOfferModel.find({ type }).exec();
         return dawn;
     }
 
-    async create(createDTO: DawnOfferDTO): Promise<DawnOffer> {
+    async create(createDTO: DawnOfferDTO): Promise<DawnOfferDTO> {
         const newPost = await new this.dawnOfferModel(createDTO);
         return newPost.save();
     }

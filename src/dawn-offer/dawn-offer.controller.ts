@@ -9,6 +9,12 @@ export class DawnOfferController {
   constructor(private dawnOfferService: DawnOfferService) { }
 
   @Get()
+  async find(@Res() res) {
+    const result = await this.dawnOfferService.get();
+    return res.status(HttpStatus.OK).json(result);
+  }
+
+  @Get('all')
   async findAll(@Res() res) {
     const result = await this.dawnOfferService.getAll();
     return res.status(HttpStatus.OK).json(result);
